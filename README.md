@@ -1,6 +1,4 @@
-# ujs python course works
-
-
+# UJS python course works
 
 
 
