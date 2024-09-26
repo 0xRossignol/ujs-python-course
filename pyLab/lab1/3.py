@@ -1,0 +1,6 @@
+list0 = list(map(int, input().split()))
+print(len(list0))
+print(max(list0))
+print(min(list0))
+print(sum(list0))
+print(sum(list0) / len(list0))
