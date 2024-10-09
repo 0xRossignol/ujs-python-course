@@ -1,7 +1,7 @@
 import math
 
 
-def not_a_circle(a, b, c):
+def not_a_circle(a : float, b : float, c : float) -> bool:
     return not (0 < c < a + b and 0 < a < b + c and 0 < b < a + c)
 
 

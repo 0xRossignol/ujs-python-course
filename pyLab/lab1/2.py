@@ -1,5 +1,5 @@
-def trans(N):
-    return round((1 / N), 1)
+def trans(feet):
+    return round((1 / feet), 1)
 
 
 n = int(input())

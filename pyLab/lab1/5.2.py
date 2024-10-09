@@ -1,8 +1,4 @@
+import calendar
+
 year = int(input())
-if year % 4 == 0:
-    if year % 100 != 0 or year % 400 == 0:
-        print("yes")
-    else:
-        print("no")
-else:
-    print("no")
+print(calendar.isleap(year))
