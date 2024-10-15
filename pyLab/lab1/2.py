@@ -1,4 +1,4 @@
-def trans(feet):
+def trans(feet: int) -> float:
     return round((1 / feet), 1)
 
 

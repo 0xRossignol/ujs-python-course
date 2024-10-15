@@ -5,7 +5,7 @@ for i in range(101, 201):
         if i % j == 0:
             flag = False
             break
-    if flag:
+    else:
         if cnt % 10 == 0 and cnt != 0:
             print()
         print(i, end=" ")
