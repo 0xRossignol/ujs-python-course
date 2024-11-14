@@ -133,3 +133,70 @@ student
 - 建立Teacher类，该类也继承自Person类，并且新增：部门department（用string类型）、工号teacherID（用int类型）、讲授课程course（用列表类型）、薪水salary（用int类型，这是私有数据）这4个数据成员，和一个构造函数、一个输出信息的printInfo函数（这里不输出私有数据，但可以考虑一下如何提供私有数据的输出方法）。
 
 然后创建2个学生对象和1个教师对象，然后分别调用这3个对象的printInfo函数输出各自的（非私有）数据信息。在学生的构造函数中让count自增，在析构函数中让count自减。
+
+## lab3
+
+### 题目3-1：用2个列表来生成字典
+
+编写程序，输入2个列表，以第一个列表中的元素为“键”，以第二个列表中的元素为“值”创建字典。若两个列表长度不等，则以短的为准而丢弃较长列表中后面的元素。最后输出字典。
+
+### 题目3-2：猜数字
+
+随机产生一个0到100之间（包括0和100）的偶数，请用户猜测具体是哪个数，即：不断从标准输入读取用户的猜测值（用户每次输入一个偶数），并根据猜测值给出提示信息：“太大”、“太小”或“正确!”
+
+### 题目3-3：用迭代器和生成器函数来输出斐波那契数列（本题为选做题）
+
+分别用迭代器和生成器函数来输出斐波那契数列的第**10**项~第**20**项
+
+### 题目3-4：获取系统当前的时间等信息
+
+编写一个程序，获取系统当前的时间等信息，输出格式如下面方框里所示。然后将这些信息写入一个文本文件，最后将文件中的内容读出来后显示在屏幕上。
+
+说明：第一行是时间和日期，第二行是星期几，第三行是本月有几天。
+```
+2021-11-09 21:19:43
+Tuesday
+There are 30 days in this month
+```
+### 题目3-5：集合及其关系程序
+
+随机生成10个从0~10区间内（包含0和10）的整数，分别组成集合A、集合B，输出A和B的内容、长度、最大值、最小值，以及A和B的并集、交集和差集
+
+### 题目3-6：整数排序和计算平均值
+
+随机产生10个两位的正整数，存入列表ls中，然后对该列表中的数进行排序（由小到大），最后分别输出：排序后的列表、这10个数的平均数，以及大于平均值的数的个数。
+
+### 题目3-7：根据奖金计算利润
+
+企业发放的奖金根据利润提成。利润(I)低于或等于10万元时，奖金可提10%；利润高于10万元，低于20万元时，低于10万元的部分按10%提成，高于10万元的部分，可可提成7.5%；20万到40万之间时，高于20万元的部分，可提成5%；40万到60万之间时高于40万元的部分，可提成3%；60万到100万之间时，高于60万元的部分，可提成1.5%，高于100万元时，超过100万元的部分按1%提成，从键盘输入当月利润I，求应发放奖金总数？
+
+### 题目3-8：求s=a+aa+aaa+aaaa+aa...a的值
+
+求s=a+aa+aaa+aaaa+aa...a的值，其中a是一个数字。例如2+22+222+2222+22222(此时共有5个数相加)，几个数相加由键盘控制。
+
+```
+2 = 0 + 2*10^0
+22 = 2 + 2*10^1 
+222 = 22 + 2*10^2
+```
+
+### 题目3-9：对文本文件进行统计
+
+参考例15.14编写一个文本统计程序，利用正则表达式对文本文件“abstract.txt”中读取字符串序列，统计文本文件“abstract.txt”中包含的段落数、行数、句数、单词数，以及统计各单词出现的频率。abstract.txt文件的内容如下面框中所示，要事先创建该文件。
+```
+Cloud services are exploding, and organizations are converging their data centers in order to take advantage of the predictability, continuity, and quality of service delivered by virtualization technologies. 
+In parallel, energy-efficient and high-security networking is of increasing importance. Network operators, and service and product providers require a new network solution to efficiently tackle the increasing demands of this changing network landscape. Software-defined networking has emerged as an efficient network technology capable of supporting the dynamic nature of future network functions and intelligent applications while lowering operating costs through simplified hardware, software, and management. 
+In this article, the question of how to achieve a successful carrier grade network with software-defined networking is raised. Specific focus is placed on the challenges of network performance, scalability, security, and interoperability with the proposal of potential solution directions.
+```
+
+### 题目3-10：单词的去重和排序
+
+编写一个程序，接收一系列单个空格分隔的单词作为输入，在删除所有重复的单词并按各单词的首字母的升序排序后，打印这些单词。
+
+假设向程序提供以下输入:
+
+`hello world and practice makes perfect and hello world again `
+
+则输出为:
+
+`again and hello makes perfect practice world`
