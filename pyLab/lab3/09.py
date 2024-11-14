@@ -5,7 +5,7 @@ from collections import Counter
 with open("abstract.txt", "r") as file:
     text = file.read()
 
-# 统计段落数 (假设段落之间有空行)
+# 统计段落数
 paragraphs = re.split(r'\n\s*\n', text.strip())
 num_paragraphs = len(paragraphs)
 
@@ -13,12 +13,12 @@ num_paragraphs = len(paragraphs)
 lines = text.splitlines()
 num_lines = len(lines)
 
-# 统计句数（假设句子以'.'、'?'、'!'等符号结束）
+# 统计句数
 sentences = re.split(r'[.!?]', text)
 sentences = [sentence.strip() for sentence in sentences if sentence.strip()]
 num_sentences = len(sentences)
 
-# 统计单词数（假设单词由字母和数字组成）
+# 统计单词数
 words = re.findall(r'\b\w+\b', text.lower())  # 转为小写，避免区分大小写
 num_words = len(words)
 
