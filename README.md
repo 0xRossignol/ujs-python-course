@@ -200,3 +200,25 @@ In this article, the question of how to achieve a successful carrier grade netwo
 则输出为:
 
 `again and hello makes perfect practice world`
+
+## Lab4
+
+### 题目4-1：利用多线程和多进程统计素数的个数
+
+参照教材P278和P286的代码，分别利用threading模块和multiprocessing模块，实现以多线程和多进程方式统计10000000以内的素数的个数，并输出计算处理所耗费的时间。
+
+### 题目4-2：在学校信息系统中实现多重继承
+
+**继续编写学校信息系统的程序**
+
+在题目2-6中学生类教师类程序的基础上，再创建一个特殊的类：stu_teacher，该类同时继承自学生类和教师类，同时在该类中定义输出其数据的函数，然后创建该类的对象，并调用输出函数显示对象的数据。输出格式自定。
+
+### 题目4-3：学校信息系统的数据库操作
+
+利用一种SQLite数据库管理工具，创建学校信息管理系统的数据库文件school.db，然后用Python程序在其中创建两个表：
+
+学生信息表（表名为student）,其中包括5个字段：姓名name、性别sex、年龄age、学号studentID、成绩score。
+
+教师信息表（表名为teacher）,其中包括7个字段：姓名name、性别sex、年龄age、部门department、工号teacherID、讲授课程course、薪水salary。
+
+然后尝试用sqlite3模块中的相关函数，实现对上述两个表进行：增删改查，也就是是添加数据、删除数据、修改数据、查询表中数据等操作。
