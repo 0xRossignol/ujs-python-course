@@ -39,7 +39,8 @@ def insert_data():
         VALUES (?, ?, ?, ?, ?)
     """, [
         ("Alice", "Female", 20, "S001", 85.5),
-        ("Bob", "Male", 22, "S002", 90.0)
+        ("Bob", "Male", 22, "S002", 90.0),
+        ("Jack", "Male", 24, "S003", 80.0)
     ])
     # 插入教师信息
     cursor.executemany("""
@@ -47,7 +48,8 @@ def insert_data():
         VALUES (?, ?, ?, ?, ?, ?, ?)
     """, [
         ("Dr. Smith", "Male", 40, "Mathematics", "T001", "Calculus", 8000),
-        ("Ms. Johnson", "Female", 35, "Physics", "T002", "Quantum Mechanics", 7500)
+        ("Ms. Johnson", "Female", 35, "Physics", "T002", "Quantum Mechanics", 7500),
+        ("Dr. Mike", "Male", 43, "CS", "T003", "Network", 10000)
     ])
     conn.commit()
     print("Data inserted successfully.")
