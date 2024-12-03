@@ -11,7 +11,7 @@ def crawl(url, result_text, status_label):
         # 修改状态
         status_label.config(text="正在爬取数据...", fg="blue")
 
-        # 发送 HTTP 请求
+        # 发送请求
         response = requests.get(url)
         response.raise_for_status()  # 如果返回状态码不是 200，则抛出异常
         html_content = response.text
@@ -63,7 +63,7 @@ def create_gui():
     url_entry.pack(pady=10)
 
     # 显示爬取结果的文本框
-    result_text = tk.Text(window, width=70, height=10, wrap=tk.WORD)
+    result_text = tk.Text(window, width=80, height=10, wrap=tk.WORD)
     result_text.pack(pady=10)
 
     # 爬虫状态标签

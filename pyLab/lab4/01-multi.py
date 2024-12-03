@@ -28,7 +28,7 @@ def count_primes(start, end, result, index):
 
 if __name__ == "__main__":
     N = 10_000_000  # 上限，计算 1 到 N 之间的素数个数
-    PROCESSES = 4  # 使用的进程数量
+    PROCESSES = 8  # 使用的进程数量
     step = N // PROCESSES  # 每个进程需要计算的区间大小
 
     processes = []  # 存储进程对象

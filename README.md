@@ -222,3 +222,15 @@ In this article, the question of how to achieve a successful carrier grade netwo
 教师信息表（表名为teacher）,其中包括7个字段：姓名name、性别sex、年龄age、部门department、工号teacherID、讲授课程course、薪水salary。
 
 然后尝试用sqlite3模块中的相关函数，实现对上述两个表进行：增删改查，也就是是添加数据、删除数据、修改数据、查询表中数据等操作。
+
+### 题目4-4（选做）：网络爬虫程序
+
+参照教材P244的例10-10或者P245的例10-11，编写一个爬虫程序。
+
+要求：爬取的数据必须能保存到本地文件，并能显示出来。
+
+补充要求：
+
+可以考虑利用多线程技术来提高效率。可以考虑利用tkinter为爬虫做一个简单的界面，比如用户输入网址，点击按钮就开始爬取数据，然后把结果显示在界面上。
+
+ 
