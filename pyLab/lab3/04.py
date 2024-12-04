@@ -1,4 +1,5 @@
 import datetime
+import calendar
 
 # 获取当前时间
 current_time = datetime.datetime.now()
@@ -7,17 +8,12 @@ current_time = datetime.datetime.now()
 weekday = current_time.strftime('%A')
 
 # 获取当前月份的天数
-days_in_month = (datetime.date(current_time.year, current_time.month + 1, 1) - datetime.date(current_time.year, current_time.month, 1)).days
+days_in_month = calendar.monthrange(current_time.year, current_time.month)[1]
 
 # 格式化时间信息
 time_str = current_time.strftime('%Y-%m-%d %H:%M:%S')
 weekday_str = weekday
 month_days_str = f"There are {days_in_month} days in this month."
-
-# 测试
-# print(time_str)
-# print(weekday_str)
-# print(month_days_str)
 
 # 将信息写入文本文件
 file_name = "time_info.txt"

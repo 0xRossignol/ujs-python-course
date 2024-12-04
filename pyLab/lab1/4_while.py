@@ -1,6 +1,4 @@
-sum_total = 0
-sum_odd = 0
-sum_even = 0
+sum_total, sum_odd, sum_even = 0, 0, 0
 i = 0
 while i <= 100:
     sum_total += i

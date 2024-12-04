@@ -1,6 +1,4 @@
-sum_total = 0
-sum_odd = 0
-sum_even = 0
+sum_total, sum_odd, sum_even = 0, 0, 0
 for i in range(101):
     sum_total += i
     if i % 2 == 0:
