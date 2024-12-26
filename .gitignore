@@ -7,4 +7,4 @@
 *.txt
 *.xlsx
 *.png
-/__pycache__
+/pyLab/design/modules/__pycache__
