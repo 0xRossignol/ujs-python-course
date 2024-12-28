@@ -49,8 +49,8 @@ class Analyzer:
 if __name__ == "__main__":
     from crawler import Crawler  # 假设模块1代码保存在 crawler.py
 
-    # Step 1: 爬取新闻标题
-    url = "https://www.zhihu.com/"
+    # Step 1: 爬取标题
+    url = "https://www.runoob.com/"
     crawler = Crawler()
     html = crawler.fetch_html(url)
     articles = crawler.parse_html(html)
@@ -59,7 +59,7 @@ if __name__ == "__main__":
         text = " ".join(article['title'] for article in articles)
 
         # Step 2: 初始化分析器
-        stopwords = {"的", "在", "了", "是", "和", "也", "与", "等"}  # 可扩展停用词
+        stopwords = {"的", "在", "了", "是", "和", "也", "与", "等", "教程", "学习", "一个", "一种"}  # 可扩展停用词
         analyzer = Analyzer(stopwords=stopwords)
 
         # Step 3: 词汇分析和生成词云

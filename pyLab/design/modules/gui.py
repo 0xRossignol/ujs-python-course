@@ -31,9 +31,20 @@ class WebCrawlerGUI:
         self.result_text = scrolledtext.ScrolledText(root, width=70, height=15, wrap=tk.WORD)
         self.result_text.pack(pady=10)
 
-        # 保存按钮
-        self.save_button = tk.Button(root, text="Save Results", command=self.save_results)
-        self.save_button.pack(pady=10)
+        # 保存按钮1
+        self.save_button_db = tk.Button(root, text="Save Results To DB",
+                                        command=lambda: self.save_results(mode=DataSaver.DB_MODE))
+        self.save_button_db.pack(pady=10)
+
+        # 保存按钮2
+        self.save_button_text = tk.Button(root, text="Save Results To text",
+                                          command=lambda: self.save_results(mode=DataSaver.TEXT_MODE))
+        self.save_button_text.pack(pady=10)
+
+        # 保存按钮3
+        self.save_button_excel = tk.Button(root, text="Save Results To excel",
+                                           command=lambda: self.save_results(mode=DataSaver.EXCEL_MODE))
+        self.save_button_excel.pack(pady=10)
 
     def start_crawl(self):
         url = self.base_url.get().strip()
@@ -74,15 +85,20 @@ class WebCrawlerGUI:
         # Save the articles to disk
         self.articles = articles
 
-    def save_results(self):
+    def save_results(self, mode=DataSaver.DB_MODE):
         if not hasattr(self, 'articles'):
             messagebox.showwarning("Save Error", "No data to save!")
             return
 
         saver = DataSaver(db_name="articles.db", file_name="articles.txt", excel_name="articles.xlsx")
-        saver.save_to_db(self.articles)
-        saver.save_to_text(self.articles)
-        saver.save_to_excel(self.articles)
+
+        if mode == DataSaver.DB_MODE:
+            saver.save_to_db(self.articles)
+        if mode == DataSaver.TEXT_MODE:
+            saver.save_to_text(self.articles)
+        if mode == DataSaver.EXCEL_MODE:
+            saver.save_to_excel(self.articles)
+
         messagebox.showinfo("Save Successful", "Data saved successfully!")
 
 
