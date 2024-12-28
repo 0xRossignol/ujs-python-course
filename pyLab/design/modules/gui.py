@@ -6,13 +6,14 @@ from design.modules.analyzer import Analyzer
 from design.modules.crawler import Crawler
 from design.modules.storage import DataSaver
 from design.modules.visualize import Visualizer
+from design.modules.extract import Extract
 
 
 class WebCrawlerGUI:
     # 初始化模块
     saver = DataSaver(db_name="articles.db", file_name="articles.txt", excel_name="articles.xlsx")
     visualizer = Visualizer()
-
+    extract = Extract()
     text = None
     articles = None
     '''
@@ -76,6 +77,16 @@ class WebCrawlerGUI:
         self.visualize_button_wc = tk.Button(root, text="显示为词云图",
                                              command=lambda: self.visualize_opts(mode=Visualizer.WORDCLOUD))
         self.visualize_button_wc.grid(row=4, column=2, padx=0, pady=10)
+
+        # content按钮
+        self.content_button = tk.Button(root, text="仅输出内容", command=lambda: self.start_extract(mode=Extract.CONTENT))
+        self.content_button.grid(row=1, column=0, padx=0, pady=10)
+
+        self.title_button = tk.Button(root, text="仅输出标题", command=lambda: self.start_extract(mode=Extract.TITLE))
+        self.title_button.grid(row=1, column=1, padx=0, pady=10)
+
+        self.url_button = tk.Button(root, text="仅输出url", command=lambda: self.start_extract(mode=Extract.URL))
+        self.url_button.grid(row=1, column=2, padx=0, pady=10)
 
     def start_crawl(self):
         url = self.base_url.get().strip()
@@ -154,6 +165,22 @@ class WebCrawlerGUI:
             self.visualizer.generate_pie_chart(self.top_10, "PIE_CHARTS")
         if mode == self.visualizer.WORDCLOUD:
             self.visualizer.generate_wordcloud(self.wordcloud_data, "WORDCLOUD")
+
+    def start_extract(self, mode=None):
+        if not hasattr(self, 'articles'):
+            messagebox.showwarning("Error", "No data to extract!")
+            return
+
+        if mode is None:
+            pass
+        if mode == self.extract.CONTENT:
+            self.extract.content(self.articles)
+        if mode == self.extract.TITLE:
+            self.extract.title(self.articles)
+        if mode == self.extract.URL:
+            self.extract.url(self.articles)
+
+        messagebox.showinfo("extract Successful", "Data extract successfully!")
 
 
 # 启动GUI应用
