@@ -106,4 +106,3 @@ if __name__ == "__main__":
         # test.generate_pie_chart(top_10, "test2")
     else:
         print("No articles found for analysis.")
-
