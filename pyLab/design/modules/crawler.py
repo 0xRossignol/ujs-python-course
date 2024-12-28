@@ -48,8 +48,6 @@ class Crawler:
             print(f"Error fetching {url}: {e}")
             return None
 
-    from bs4 import BeautifulSoup
-
     def parse_html(self, html):
         """
         Parses TechCrunch homepage HTML and extracts article titles and URLs.
@@ -66,7 +64,7 @@ class Crawler:
                     results.append({"title": article.get_text(strip=True), "url": article['href']})
                 # 如果是<p>标签，则只获取标题文本
                 elif article.name == 'p':
-                    results.append({"title": article.get_text(strip=True), "url": None})
+                    results.append({"content": article.get_text(strip=True), "url": None})
 
             return results
         except Exception as e:
@@ -79,7 +77,6 @@ if __name__ == "__main__":
     """
     使用代理反爬：
         如果目标网站对单个 IP 地址有访问限制，可以配置 HTTP 或 HTTPS 代理。
-        确保代理可用，建议使用专门的代理服务（如付费代理）以获得更高成功率。
     """
     # proxies = [
     #
@@ -88,7 +85,7 @@ if __name__ == "__main__":
 
     html = crawler.fetch_html(url)
     if html:
-        articles = crawler.parse_techcrunch(html)
+        articles = crawler.parse_html(html)
         if articles:
             print("Extracted Articles:")
             for i, article in enumerate(articles, start=1):

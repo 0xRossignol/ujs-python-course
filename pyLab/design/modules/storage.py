@@ -27,14 +27,27 @@ class DataSaver:
                 CREATE TABLE IF NOT EXISTS articles (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     title TEXT NOT NULL,
-                    url TEXT NOT NULL
+                    url TEXT NOT NULL,
+                    content TEXT NOT NULL
                 )
             """)
 
             # Insert articles into the table
+            data_to_insert = []
+            for article in articles:
+                # Ensure the 'title', 'url' and 'content' are not empty
+                title = article.get('title', 'No title') or 'No title'
+                url = article.get('url', 'No URL') or 'No URL'
+                content = article.get('content', 'No content') or 'No content'
+
+                # Check if URL and Title are really not empty
+                if title and url:
+                    data_to_insert.append((title, url, content))
+
+            # Insert articles into the table
             cursor.executemany("""
-                INSERT INTO articles (title, url) VALUES (?, ?)
-            """, [(article['title'], article['url']) for article in articles])
+                INSERT INTO articles (title, url, content) VALUES (?, ?, ?)
+            """, data_to_insert)
 
             connection.commit()
             print(f"Saved {len(articles)} articles to the database: {self.db_name}")
@@ -50,7 +63,13 @@ class DataSaver:
         try:
             with open(self.file_name, 'w', encoding='utf-8') as file:
                 for article in articles:
-                    file.write(f"Title: {article['title']}\nURL: {article['url']}\n\n")
+                    title = article.get('title', 'No title')
+                    url = article.get('url', 'No URL')
+                    content = article.get('content', 'No content')
+
+                    file.write(f"Title: {title}\n")
+                    file.write(f"URL: {url}\n")
+                    file.write(f"Content: {content}\n\n")
             print(f"Saved {len(articles)} articles to text file: {self.file_name}")
         except Exception as e:
             print(f"Error saving to text file: {e}")

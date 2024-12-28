@@ -13,7 +13,7 @@ class Analyzer:
         "been", "being", "have", "has", "had", "do", "does", "did", "will", "shall", "would",
         "should", "can", "could", "may", "might", "must", "not", "very", "just", "still", "also",
         "always", "even", "really", "too", "quite", "only", "for", "to", "of", "from", "as",
-        "up", "down", "out", "off", "about", "how", "why", "What", "next", "new"
+        "up", "down", "out", "off", "about", "how", "why", "What", "next", "new", "2024"
     ]
     # 中文停用词
     stop_words_cn = [

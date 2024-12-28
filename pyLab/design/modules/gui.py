@@ -28,18 +28,18 @@ class WebCrawlerGUI:
         self.base_url = tk.StringVar()
 
         # 输入网址框
-        self.url_label = tk.Label(root, text="Enter website URL:")
+        self.url_label = tk.Label(root, text="请输入 URL:")
         self.url_label.grid(row=0, column=0, padx=10, pady=10, sticky="w")
         self.url_entry = tk.Entry(root, textvariable=self.base_url, width=50)
         self.url_entry.grid(row=0, column=1, padx=10, pady=5)
 
         # 爬取按钮
-        self.crawl_button = tk.Button(root, text="Crawl Website",
+        self.crawl_button = tk.Button(root, text="开始爬取",
                                       command=lambda: {
                                           self.start_crawl(),
                                           self.start_analyze()
                                       })
-        self.crawl_button.grid(row=1, column=0, columnspan=2, pady=10)
+        self.crawl_button.grid(row=0, column=2, columnspan=2, pady=10)
 
         # 显示爬取结果的文本框
         self.result_text = scrolledtext.ScrolledText(root, width=70, height=15, wrap=tk.WORD)
@@ -49,15 +49,15 @@ class WebCrawlerGUI:
         保存模块
         '''
         # 保存模块按钮
-        self.save_button_db = tk.Button(root, text="Save Results To DB",
+        self.save_button_db = tk.Button(root, text="以数据库保存",
                                         command=lambda: self.save_results(mode=DataSaver.DB_MODE))
         self.save_button_db.grid(row=3, column=0, padx=0, pady=10)
 
-        self.save_button_text = tk.Button(root, text="Save Results To text",
+        self.save_button_text = tk.Button(root, text="以text保存",
                                           command=lambda: self.save_results(mode=DataSaver.TEXT_MODE))
         self.save_button_text.grid(row=3, column=1, padx=0, pady=10)
 
-        self.save_button_excel = tk.Button(root, text="Save Results To excel",
+        self.save_button_excel = tk.Button(root, text="以excel保存",
                                            command=lambda: self.save_results(mode=DataSaver.EXCEL_MODE))
         self.save_button_excel.grid(row=3, column=2, padx=0, pady=10)
 
@@ -65,15 +65,15 @@ class WebCrawlerGUI:
         可视化模块
         '''
         # 可视化模块按钮
-        self.visualize_button_bar = tk.Button(root, text="Bar Charts",
+        self.visualize_button_bar = tk.Button(root, text="显示为柱状图",
                                               command=lambda: self.visualize_opts(mode=Visualizer.BAR_CHARTS))
         self.visualize_button_bar.grid(row=4, column=0, padx=0, pady=10)
 
-        self.visualize_button_pie = tk.Button(root, text="Pie Charts",
+        self.visualize_button_pie = tk.Button(root, text="显示为饼状图",
                                               command=lambda: self.visualize_opts(mode=Visualizer.PIE_CHARTS))
         self.visualize_button_pie.grid(row=4, column=1, padx=0, pady=10)
 
-        self.visualize_button_wc = tk.Button(root, text="WordCloud",
+        self.visualize_button_wc = tk.Button(root, text="显示为词云图",
                                              command=lambda: self.visualize_opts(mode=Visualizer.WORDCLOUD))
         self.visualize_button_wc.grid(row=4, column=2, padx=0, pady=10)
 
@@ -97,9 +97,15 @@ class WebCrawlerGUI:
 
         self.result_text.insert(tk.END, f"Found {len(articles)} articles:\n")
         for article in articles:
-            self.result_text.insert(tk.END, f"{article['title']} - {article['url']}\n")
+            if article.get("title"):
+                self.result_text.insert(tk.END, f"{article['title']} - {article['url']}\n")
+            elif article.get("content"):
+                self.result_text.insert(tk.END, f"{article['content']}\n")
 
-        self.text = " ".join(article['title'] for article in articles)
+        self.text = " ".join(
+            (article.get('title') or article.get('content', '')).strip()
+            for article in articles if article.get('title') or article.get('content')
+        )
         # Save the articles to disk
         self.articles = articles
 
