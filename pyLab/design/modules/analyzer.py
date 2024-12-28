@@ -17,6 +17,19 @@ class Analyzer:
         """
         words = jieba.lcut(text)
         words = [word for word in words if word not in self.stopwords and len(word.strip()) > 1]
+
+        """
+        将结果写入txt文件
+        """
+        path = "../data/processed/words.txt"
+        with open(path, 'w', encoding='utf-8') as fp:
+            cnt = 0
+            for word in words:
+                if cnt >= 15:
+                    fp.write('\n')
+                    cnt = 0
+                fp.write(word + ' ')
+                cnt += 1
         return words
 
     def calculate_word_frequency(self, words):
@@ -24,8 +37,6 @@ class Analyzer:
         统计词频。
         """
         return Counter(words)
-
-
 
 
 if __name__ == "__main__":
@@ -49,6 +60,5 @@ if __name__ == "__main__":
         word_freq = analyzer.calculate_word_frequency(words)
         print("Word Frequency:", word_freq.most_common(10))  # 显示前10高频词
 
-        analyzer.generate_wordcloud(word_freq, output_path="wordcloud.png")
     else:
         print("No articles found for analysis.")

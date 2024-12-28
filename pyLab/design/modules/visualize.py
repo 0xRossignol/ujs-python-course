@@ -13,10 +13,11 @@ class Visualizer:
     name_prefix = "../data/visualizations/"
     BAR_CHARTS = 1
     PIE_CHARTS = 2
+    WORDCLOUD_MODE = 3
 
     def generate_bar_chart(self, x_data, y_data, filename):
         fullname = self.name_prefix + filename + ".html"
-        path = url_prefix + filename + ".html"
+        path = self.url_prefix + filename + ".html"
         # 创建柱状图
         bar = Bar()
         bar.add_xaxis(x_data)
@@ -37,7 +38,7 @@ class Visualizer:
 
     def generate_pie_chart(self, data, filename):
         fullname = self.name_prefix + filename + ".html"
-        path = url_prefix + filename + ".html"
+        path = self.url_prefix + filename + ".html"
         # 创建饼状图
         pie = Pie()
         pie.add("", data)
@@ -45,6 +46,7 @@ class Visualizer:
         # 配置图表
         pie.set_global_opts(
             title_opts=opts.TitleOpts(title="菜鸟教程技术出现数饼状图"),
+            legend_opts=opts.LegendOpts(pos_bottom='0')
         )
 
         # 渲染图表
@@ -95,7 +97,15 @@ if __name__ == "__main__":
         word_freq = analyzer.calculate_word_frequency(words)
         print("Word Frequency:", word_freq.most_common(10))  # 显示前10高频词
 
+        # 获取前 10 个高频词（返回的是一个列表，元素是 (key, value) 元组）
+        top_10 = word_freq.most_common(10)
+        keys = [item[0] for item in top_10]
+        values = [item[1] for item in top_10]
+        print(keys)
+        print(values)
         test.generate_wordcloud(word_freq, output_path="wordcloud.png")
+        test.generate_bar_chart(keys, values, "test1")
+        test.generate_pie_chart(top_10, "test2")
     else:
         print("No articles found for analysis.")
 
