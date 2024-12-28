@@ -1,11 +1,9 @@
 import jieba
 from collections import Counter
-from wordcloud import WordCloud
-import matplotlib.pyplot as plt
 
 
 class Analyzer:
-    url_prefix = "../data/processed/"
+    url_prefix = "../data/visualizations/"
 
     def __init__(self, stopwords=None):
         """
@@ -27,23 +25,7 @@ class Analyzer:
         """
         return Counter(words)
 
-    def generate_wordcloud(self, word_freq, output_path=None):
-        """
-        根据词频生成词云图。
-        """
-        wc = WordCloud(font_path='msyh.ttc',  # 指定字体路径，确保支持中文
-                       width=800, height=400, background_color='white')
-        wc.generate_from_frequencies(word_freq)
 
-        # 显示词云
-        plt.figure(figsize=(10, 5))
-        plt.imshow(wc, interpolation="bilinear")
-        plt.axis("off")
-        plt.show()
-
-        # 保存词云到文件
-        if output_path:
-            wc.to_file(Analyzer.url_prefix + output_path)
 
 
 if __name__ == "__main__":

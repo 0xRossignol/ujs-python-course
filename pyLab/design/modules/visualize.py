@@ -2,6 +2,9 @@ from pyecharts import options as opts
 from pyecharts.charts import Pie
 from pyecharts.charts import Bar
 import webbrowser
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+from design.modules.analyzer import Analyzer
 
 
 class Visualizer:
@@ -50,18 +53,49 @@ class Visualizer:
         # 查看图表
         webbrowser.open(path)
 
+    def generate_wordcloud(self, word_freq, output_path=None):
+        """
+        根据词频生成词云图。
+        """
+        wc = WordCloud(font_path='msyh.ttc',  # 指定字体路径，确保支持中文
+                       width=800, height=400, background_color='white')
+        wc.generate_from_frequencies(word_freq)
+
+        # 显示词云
+        plt.figure(figsize=(10, 5))
+        plt.imshow(wc, interpolation="bilinear")
+        plt.axis("off")
+        plt.show()
+
+        # 保存词云到文件
+        if output_path:
+            wc.to_file(Analyzer.url_prefix + output_path)
+
 
 if __name__ == "__main__":
-    test = Visualizer()
+    from crawler import Crawler  # 假设模块1代码保存在 crawler.py
 
-    url_prefix = ("file:///C:/Users/Rossignol/Desktop/school/courses/"
-                  "python/python-school/pyLab/design/data/visualizations/")
-    # 准备数据
-    x_data = ['一月', '二月', '三月', '四月', '五月']
-    y_data = [10, 20, 15, 25, 30]
-    data = [list(z) for z in zip(x_data, y_data)]
-    data_dict = dict(zip(x_data, y_data))
+    # Step 1: 爬取标题
+    url = "https://www.runoob.com/"
+    crawler = Crawler()
+    html = crawler.fetch_html(url)
+    articles = crawler.parse_html(html)
 
-    test.generate_bar_chart(x_data, y_data, "test1")
-    test.generate_pie_chart(data, "test2")
+    if articles:
+        text = " ".join(article['title'] for article in articles)
+
+        # Step 2: 初始化分析器
+        stopwords = {"的", "在", "了", "是", "和", "也", "与", "等",
+                     "教程", "学习", "一个", "一种", "免费", "一套"}  # 可扩展停用词
+        analyzer = Analyzer(stopwords=stopwords)
+        test = Visualizer()
+
+        # Step 3: 词汇分析和生成词云
+        words = analyzer.preprocess_text(text)
+        word_freq = analyzer.calculate_word_frequency(words)
+        print("Word Frequency:", word_freq.most_common(10))  # 显示前10高频词
+
+        test.generate_wordcloud(word_freq, output_path="wordcloud.png")
+    else:
+        print("No articles found for analysis.")
 
