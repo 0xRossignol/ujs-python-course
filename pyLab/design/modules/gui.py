@@ -106,7 +106,7 @@ class WebCrawlerGUI:
     def start_analyze(self):
         # 初始化分析器
 
-        analyzer = Analyzer(stopwords=Analyzer.stop_words_cn)
+        analyzer = Analyzer(stopwords=Analyzer.stop_words)
 
         # 词汇分析和生成词云
         words = analyzer.preprocess_text(self.text)

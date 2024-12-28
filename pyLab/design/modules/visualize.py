@@ -24,7 +24,7 @@ class Visualizer:
 
         # 配置图表
         bar.set_global_opts(
-            title_opts=opts.TitleOpts(title="菜鸟教程技术出现数柱状图"),
+            title_opts=opts.TitleOpts(title="单词出现数柱状图"),
             xaxis_opts=opts.AxisOpts(name="名称"),
             yaxis_opts=opts.AxisOpts(name="出现数")
         )
@@ -46,7 +46,7 @@ class Visualizer:
 
         # 配置图表
         pie.set_global_opts(
-            title_opts=opts.TitleOpts(title="菜鸟教程技术出现数饼状图"),
+            title_opts=opts.TitleOpts(title="单词出现数饼状图"),
             legend_opts=opts.LegendOpts(pos_bottom='0')
         )
 

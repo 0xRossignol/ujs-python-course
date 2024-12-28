@@ -48,14 +48,26 @@ class Crawler:
             print(f"Error fetching {url}: {e}")
             return None
 
+    from bs4 import BeautifulSoup
+
     def parse_html(self, html):
         """
         Parses TechCrunch homepage HTML and extracts article titles and URLs.
+        Skips <a> tags without href attributes.
         """
         try:
             soup = BeautifulSoup(html, 'html.parser')
-            articles = soup.find_all('a')
-            results = [{"title": article.get_text(strip=True), "url": article['href']} for article in articles]
+            articles = soup.find_all(['a', 'p'])
+            results = []
+
+            for article in articles:
+                # 如果是<a>标签且包含href属性，才获取链接
+                if article.name == 'a' and article.has_attr('href'):
+                    results.append({"title": article.get_text(strip=True), "url": article['href']})
+                # 如果是<p>标签，则只获取标题文本
+                elif article.name == 'p':
+                    results.append({"title": article.get_text(strip=True), "url": None})
+
             return results
         except Exception as e:
             print(f"Error parsing HTML: {e}")
