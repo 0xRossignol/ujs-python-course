@@ -105,9 +105,8 @@ class WebCrawlerGUI:
 
     def start_analyze(self):
         # 初始化分析器
-        stopwords = {"的", "在", "了", "是", "和", "也", "与", "等",
-                     "教程", "学习", "一个", "一种", "免费", "一套"}  # 可扩展停用词
-        analyzer = Analyzer(stopwords=stopwords)
+
+        analyzer = Analyzer(stopwords=Analyzer.stop_words_cn)
 
         # 词汇分析和生成词云
         words = analyzer.preprocess_text(self.text)

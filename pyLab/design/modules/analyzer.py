@@ -4,6 +4,25 @@ from collections import Counter
 
 class Analyzer:
     url_prefix = "../data/visualizations/"
+    # 英语停用词
+    stop_words_en = [
+        "the", "a", "an", "he", "she", "it", "they", "we", "you", "I", "me", "him", "her",
+        "us", "them", "this", "that", "these", "those", "and", "but", "or", "nor", "for",
+        "so", "yet", "in", "on", "at", "by", "with", "about", "against", "between", "under",
+        "over", "through", "during", "before", "after", "is", "am", "are", "was", "were", "be",
+        "been", "being", "have", "has", "had", "do", "does", "did", "will", "shall", "would",
+        "should", "can", "could", "may", "might", "must", "not", "very", "just", "still", "also",
+        "always", "even", "really", "too", "quite", "only", "for", "to", "of", "from", "as",
+        "up", "down", "out", "off", "about", "how", "why", "What", "next", "new"
+    ]
+    # 中文停用词
+    stop_words_cn = ['与', '能', '对不起', '比', '请', '为', '所以', '知道', '但是', '免费', '等',
+                     '对', '如同', '但', '来', '或', '怎么样', '非常', '哈', '虽然', '在', '她', '而',
+                     '这', '去', '想', '教程', '都', '到', '没有', '我', '一套', '呀', '是的', '那', '我们',
+                     '不过', '学习', '了', '什么', '你', '有', '会', '可以', '呢', '因为', '的', '每', '要',
+                     '跟', '它', '一种', '和', '你们', '看', '而且', '从', '并且', '啊', '只是', '说', '上',
+                     '也', '如果', '一个', '啦', '哦', '不是', '下', '做', '嘛', '它们', '还有', '怎么', '是',
+                     '些', '就', '并', '如', '他', '即使', '只', '学习']
 
     def __init__(self, stopwords=None):
         """
@@ -15,6 +34,7 @@ class Analyzer:
         """
         预处理文本，移除停用词并分词。
         """
+        text = text.lower()
         words = jieba.lcut(text)
         words = [word for word in words if word not in self.stopwords and len(word.strip()) > 1]
 
