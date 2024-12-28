@@ -9,7 +9,7 @@ class DataSaver:
     TEXT_MODE = 2
     EXCEL_MODE = 3
 
-    def __init__(self, db_name="articles.db", file_name="articles.txt", excel_name="articles.xlsx"):
+    def __init__(self, db_name="words.db", file_name="words.txt", excel_name="words.xlsx"):
         self.db_name = DataSaver.url_prefix + db_name
         self.file_name = DataSaver.url_prefix + file_name
         self.excel_name = DataSaver.url_prefix + excel_name

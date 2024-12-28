@@ -1,9 +1,8 @@
 from pyecharts import options as opts
 from pyecharts.charts import Pie
 from pyecharts.charts import Bar
+from pyecharts.charts import WordCloud
 import webbrowser
-from wordcloud import WordCloud
-import matplotlib.pyplot as plt
 from design.modules.analyzer import Analyzer
 
 
@@ -13,7 +12,7 @@ class Visualizer:
     name_prefix = "../data/visualizations/"
     BAR_CHARTS = 1
     PIE_CHARTS = 2
-    WORDCLOUD_MODE = 3
+    WORDCLOUD = 3
 
     def generate_bar_chart(self, x_data, y_data, filename):
         fullname = self.name_prefix + filename + ".html"
@@ -27,8 +26,10 @@ class Visualizer:
         bar.set_global_opts(
             title_opts=opts.TitleOpts(title="菜鸟教程技术出现数柱状图"),
             xaxis_opts=opts.AxisOpts(name="名称"),
-            yaxis_opts=opts.AxisOpts(name="出现数"),
+            yaxis_opts=opts.AxisOpts(name="出现数")
         )
+
+        bar.width = "1000px"
 
         # 渲染图表
         bar.render(fullname)
@@ -55,23 +56,18 @@ class Visualizer:
         # 查看图表
         webbrowser.open(path)
 
-    def generate_wordcloud(self, word_freq, output_path=None):
-        """
-        根据词频生成词云图。
-        """
-        wc = WordCloud(font_path='msyh.ttc',  # 指定字体路径，确保支持中文
-                       width=800, height=400, background_color='white')
-        wc.generate_from_frequencies(word_freq)
+    def generate_wordcloud(self, data, filename):
+        fullname = self.name_prefix + filename + ".html"
+        path = self.url_prefix + filename + ".html"
+        # 创建词云图
+        wc = WordCloud()
+        wc.add("", data)
 
-        # 显示词云
-        plt.figure(figsize=(10, 5))
-        plt.imshow(wc, interpolation="bilinear")
-        plt.axis("off")
-        plt.show()
+        # 渲染图表
+        wc.render(fullname)
 
-        # 保存词云到文件
-        if output_path:
-            wc.to_file(Analyzer.url_prefix + output_path)
+        # 查看图表
+        webbrowser.open(path)
 
 
 if __name__ == "__main__":
@@ -101,11 +97,13 @@ if __name__ == "__main__":
         top_10 = word_freq.most_common(10)
         keys = [item[0] for item in top_10]
         values = [item[1] for item in top_10]
-        print(keys)
-        print(values)
-        test.generate_wordcloud(word_freq, output_path="wordcloud.png")
+        wordcloud_data = [(word, freq) for word, freq in word_freq.items()]
+        # print(keys)
+        # print(values)
+        # print(word_freq)
+        # test.generate_wordcloud(wordcloud_data, "test3")
         test.generate_bar_chart(keys, values, "test1")
-        test.generate_pie_chart(top_10, "test2")
+        # test.generate_pie_chart(top_10, "test2")
     else:
         print("No articles found for analysis.")
 
