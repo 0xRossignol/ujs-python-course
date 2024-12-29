@@ -168,6 +168,8 @@ class WebCrawlerGUI:
         self.articles = articles
 
     def start_analyze(self):
+        if not ((self.keys and self.values) and self.top_10 and self.wordcloud_data and self.articles):
+            return
 
         # 词汇分析
         words = self.analyzer.preprocess_text(self.text)
@@ -250,6 +252,8 @@ class WebCrawlerGUI:
         if not ((self.keys and self.values) and self.top_10 and self.wordcloud_data and self.articles):
             messagebox.showwarning("Error", "请先爬取相应网站内容")
             return
+
+        messagebox.showinfo("start summary", "正在概括，请稍等。。。")
 
         self.result_text.delete(1.0, tk.END)
 
