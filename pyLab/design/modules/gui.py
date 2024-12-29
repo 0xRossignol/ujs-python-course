@@ -143,7 +143,7 @@ class WebCrawlerGUI:
         articles = crawler.parse_html(html)
 
         if not articles:
-            messagebox.showerror("Error", "Failed to retrieve articles")
+            messagebox.showerror("Error", "爬取失败")
             return
 
         self.result_text.insert(tk.END, f"Found {len(articles)} articles:\n")
@@ -174,8 +174,8 @@ class WebCrawlerGUI:
         self.values = [item[1] for item in self.top_10]
 
     def save_results(self, mode=DataSaver.DB_MODE):
-        if not hasattr(self, 'articles'):
-            messagebox.showwarning("Save Error", "No data to save!")
+        if not ((self.keys and self.values) and self.top_10 and self.wordcloud_data and self.articles):
+            messagebox.showwarning("Error", "请先爬取相应网站内容")
             return
 
         if mode is None:
@@ -187,11 +187,11 @@ class WebCrawlerGUI:
         if mode == DataSaver.EXCEL_MODE:
             self.saver.save_to_excel(self.articles)
 
-        messagebox.showinfo("Save Successful", "Data saved successfully!")
+        messagebox.showinfo("Save Successful", "数据保存成功！")
 
     def visualize_opts(self, mode=None):
-        if not hasattr(self, 'articles'):
-            messagebox.showwarning("Error", "No data to visualize!")
+        if not ((self.keys and self.values) and self.top_10 and self.wordcloud_data):
+            messagebox.showwarning("Error", "请先爬取相应网站内容")
             return
 
         if mode is None:
@@ -204,8 +204,8 @@ class WebCrawlerGUI:
             self.visualizer.generate_wordcloud(self.wordcloud_data, "WORDCLOUD")
 
     def start_extract(self, mode=None):
-        if not hasattr(self, 'articles'):
-            messagebox.showwarning("Error", "No data to extract!")
+        if not ((self.keys and self.values) and self.top_10 and self.wordcloud_data and self.articles):
+            messagebox.showwarning("Error", "请先爬取相应网站内容")
             return
 
         if mode is None:
@@ -217,7 +217,7 @@ class WebCrawlerGUI:
         if mode == self.extract.URL:
             self.extract.url(self.articles)
 
-        messagebox.showinfo("extract Successful", "Data extract successfully!")
+        messagebox.showinfo("extract Successful", "数据提取成功！")
 
     def start_search(self):
         select_item = self.combo_box.get()
@@ -237,7 +237,7 @@ class WebCrawlerGUI:
         if select_item == self.search.BING:
             self.search.go_to_bing(word)
 
-        messagebox.showinfo("search Successful", f"成功跳转到{select_item}: {word}")
+        # messagebox.showinfo("search Successful", f"成功跳转到{select_item}: {word}")
 
 
 # 启动GUI应用
