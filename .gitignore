@@ -8,3 +8,4 @@
 *.xlsx
 *.png
 /pyLab/design/modules/__pycache__
+/pyLab/design/data
