@@ -50,8 +50,7 @@ class Crawler:
 
     def parse_html(self, html):
         """
-        Parses TechCrunch homepage HTML and extracts article titles and URLs.
-        Skips <a> tags without href attributes.
+        处理爬取到的内容
         """
         try:
             soup = BeautifulSoup(html, 'html.parser')
@@ -61,10 +60,17 @@ class Crawler:
             for article in articles:
                 # 如果是<a>标签且包含href属性，才获取链接
                 if article.name == 'a' and article.has_attr('href'):
-                    results.append({"title": article.get_text(strip=True), "url": article['href']})
+                    results.append({
+                        "title": article.get_text(strip=False),
+                        "url": article['href']
+                    })
                 # 如果是<p>标签，则只获取标题文本
                 elif article.name == 'p':
-                    results.append({"content": article.get_text(strip=True), "url": None})
+                    results.append({
+                        "title": None,
+                        "content": article.get_text(strip=False),
+                        "url": None
+                    })
 
             return results
         except Exception as e:

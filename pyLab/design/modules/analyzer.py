@@ -41,7 +41,7 @@ class Analyzer:
         """
         text = text.lower()
         words = jieba.lcut(text)
-        words = [word for word in words if word not in self.stopwords and len(word.strip()) > 1]
+        words = [word for word in words if word not in self.stop_words and len(word.strip()) > 1]
 
         """
         将结果写入txt文件

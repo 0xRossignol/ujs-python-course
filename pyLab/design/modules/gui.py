@@ -12,6 +12,7 @@ from design.modules.extract import Extract
 class WebCrawlerGUI:
     # 初始化模块
     saver = DataSaver(db_name="articles.db", file_name="articles.txt", excel_name="articles.xlsx")
+    analyzer = Analyzer(stopwords=Analyzer.stop_words)
     visualizer = Visualizer()
     extract = Extract()
     text = None
@@ -46,9 +47,6 @@ class WebCrawlerGUI:
         self.result_text = scrolledtext.ScrolledText(root, width=70, height=15, wrap=tk.WORD)
         self.result_text.grid(row=2, column=0, columnspan=2, pady=10)
 
-        '''
-        保存模块
-        '''
         # 保存模块按钮
         self.save_button_db = tk.Button(root, text="以数据库保存",
                                         command=lambda: self.save_results(mode=DataSaver.DB_MODE))
@@ -62,9 +60,6 @@ class WebCrawlerGUI:
                                            command=lambda: self.save_results(mode=DataSaver.EXCEL_MODE))
         self.save_button_excel.grid(row=3, column=2, padx=0, pady=10)
 
-        '''
-        可视化模块
-        '''
         # 可视化模块按钮
         self.visualize_button_bar = tk.Button(root, text="显示为柱状图",
                                               command=lambda: self.visualize_opts(mode=Visualizer.BAR_CHARTS))
@@ -78,7 +73,7 @@ class WebCrawlerGUI:
                                              command=lambda: self.visualize_opts(mode=Visualizer.WORDCLOUD))
         self.visualize_button_wc.grid(row=4, column=2, padx=0, pady=10)
 
-        # content按钮
+        # 提取模块按钮
         self.content_button = tk.Button(root, text="仅输出内容", command=lambda: self.start_extract(mode=Extract.CONTENT))
         self.content_button.grid(row=1, column=0, padx=0, pady=10)
 
@@ -94,10 +89,10 @@ class WebCrawlerGUI:
             messagebox.showwarning("Input Error", "Please enter a valid URL")
             return
 
-        self.result_text.delete(1.0, tk.END)  # Clear the text box
+        self.result_text.delete(1.0, tk.END)
         self.result_text.insert(tk.END, f"Crawling {url}...\n")
 
-        # Step 1: Crawl articles
+        # 爬取内容
         crawler = Crawler()
         html = crawler.fetch_html(url)
         articles = crawler.parse_html(html)
@@ -117,17 +112,14 @@ class WebCrawlerGUI:
             (article.get('title') or article.get('content', '')).strip()
             for article in articles if article.get('title') or article.get('content')
         )
-        # Save the articles to disk
+        # 保存内容
         self.articles = articles
 
     def start_analyze(self):
-        # 初始化分析器
 
-        analyzer = Analyzer(stopwords=Analyzer.stop_words)
-
-        # 词汇分析和生成词云
-        words = analyzer.preprocess_text(self.text)
-        word_freq = analyzer.calculate_word_frequency(words)
+        # 词汇分析
+        words = self.analyzer.preprocess_text(self.text)
+        word_freq = self.analyzer.calculate_word_frequency(words)
         print("Word Frequency:", word_freq.most_common(10))  # 显示前10高频词
 
         # 获取前 10 个高频词（返回的是一个列表，元素是 (key, value) 元组）
