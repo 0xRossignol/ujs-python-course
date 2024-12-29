@@ -10,6 +10,7 @@ from design.modules.storage import DataSaver
 from design.modules.visualize import Visualizer
 from design.modules.extract import Extract
 from design.modules.search import Search
+from design.modules.ai import AiSummary
 
 
 class WebCrawlerGUI:
@@ -19,6 +20,7 @@ class WebCrawlerGUI:
     visualizer = Visualizer()
     extract = Extract()
     search = Search()
+    ai = AiSummary()
     text = None
     articles = None
 
@@ -53,7 +55,7 @@ class WebCrawlerGUI:
                                            self.start_analyze()
                                        },
                                        bootstyle="dark-outline")
-        self.crawl_button.grid(row=0, column=2, columnspan=2, pady=10,)
+        self.crawl_button.grid(row=0, column=2, columnspan=1, pady=10,)
 
         # 显示爬取结果的文本框
         self.result_text = scrolledtext.ScrolledText(root, width=90, height=15, wrap=tk.WORD,
@@ -107,6 +109,11 @@ class WebCrawlerGUI:
                                      command=lambda: self.start_extract(mode=Extract.URL),
                                      bootstyle="dark-outline")
         self.url_button.grid(row=2, column=2, padx=0, pady=10)
+
+        self.url_button = ttk.Button(root, text="输出ai概括",
+                                     command=lambda: self.start_summary(),
+                                     bootstyle="dark-outline")
+        self.url_button.grid(row=0, column=3, padx=0, pady=10)
 
         # 搜索模块
         # 输入网址框
@@ -238,6 +245,14 @@ class WebCrawlerGUI:
             self.search.go_to_bing(word)
 
         # messagebox.showinfo("search Successful", f"成功跳转到{select_item}: {word}")
+
+    def start_summary(self):
+        if not ((self.keys and self.values) and self.top_10 and self.wordcloud_data and self.articles):
+            messagebox.showwarning("Error", "请先爬取相应网站内容")
+            return
+
+        self.extract.content(self.articles)
+        self.ai.summary()
 
 
 # 启动GUI应用
