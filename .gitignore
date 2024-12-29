@@ -4,3 +4,7 @@
 /pythonProject1
 /.idea
 *.db
+*.txt
+*.xlsx
+*.png
+/pyLab/design/modules/__pycache__
