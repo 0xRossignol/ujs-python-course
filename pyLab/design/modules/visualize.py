@@ -29,7 +29,7 @@ class Visualizer:
             yaxis_opts=opts.AxisOpts(name="出现数")
         )
 
-        bar.width = "1000px"
+        bar.width = "1500px"
 
         # 渲染图表
         bar.render(fullname)

@@ -56,7 +56,7 @@ class WebCrawlerGUI:
         self.crawl_button.grid(row=0, column=2, columnspan=2, pady=10,)
 
         # 显示爬取结果的文本框
-        self.result_text = scrolledtext.ScrolledText(root, width=80, height=15, wrap=tk.WORD,
+        self.result_text = scrolledtext.ScrolledText(root, width=90, height=15, wrap=tk.WORD,
                                                      font=("SimSun", 10))
         self.result_text.grid(row=3, column=0, columnspan=3, pady=10)
 
