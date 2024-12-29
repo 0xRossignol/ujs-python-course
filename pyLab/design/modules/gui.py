@@ -168,7 +168,7 @@ class WebCrawlerGUI:
         self.articles = articles
 
     def start_analyze(self):
-        if not ((self.keys and self.values) and self.top_10 and self.wordcloud_data and self.articles):
+        if not  self.articles:
             return
 
         # 词汇分析
