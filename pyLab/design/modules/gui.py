@@ -130,7 +130,7 @@ class WebCrawlerGUI:
         # 搜索按钮
         self.search_button = ttk.Button(root, text="搜索",
                                         command=lambda: {
-                                           self.start_search()
+                                            self.start_search()
                                         },
                                         bootstyle="dark-outline")
         self.search_button.grid(row=1, column=3, columnspan=2, pady=10)
@@ -251,8 +251,12 @@ class WebCrawlerGUI:
             messagebox.showwarning("Error", "请先爬取相应网站内容")
             return
 
+        self.result_text.delete(1.0, tk.END)
+
         self.extract.content(self.articles)
-        self.ai.summary()
+        summary = self.ai.summary()
+
+        self.result_text.insert(tk.END, summary)
 
 
 # 启动GUI应用

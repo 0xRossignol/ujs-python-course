@@ -32,6 +32,8 @@ class AiSummary:
         print("\nSummarized Text:")
         print(summary)
 
+        return summary
+
     def evaluate(self):
         # 加载ROUGE评估指标
         rouge = evaluate.load("rouge")
