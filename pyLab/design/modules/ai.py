@@ -1,5 +1,6 @@
-from transformers import BartTokenizer, BartForConditionalGeneration
+from transformers import BartTokenizer, BartForConditionalGeneration, pipeline
 import evaluate
+from datasets import load_dataset
 
 
 class AiSummary:
@@ -35,23 +36,29 @@ class AiSummary:
         return summary
 
     def evaluate(self):
-        # 加载ROUGE评估指标
+        # 加载数据集
+        dataset = load_dataset("cnn_dailymail", "3.0.0", split="test")
+
+        # 加载预训练的文本生成模型
+        summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+
+        # 加载ROUGE评估器
         rouge = evaluate.load("rouge")
-        # 读取生成的摘要和参考摘要
-        generated_summary_path = self.output_prefix + 'test.txt'
-        with open(generated_summary_path, 'r', encoding='utf-8') as f:
-            generated_summary = f.read()
-        # 参考摘要
-        reference_summary_path = self.output_prefix + 'reference.txt'  # 参考文件路径
-        with open(reference_summary_path, 'r', encoding='utf-8') as f:
-            reference_summary = f.read()
-        # 计算ROUGE分数
-        results = rouge.compute(predictions=[generated_summary], references=[reference_summary])
-        # 输出评估结果
-        print("\nROUGE Scores:")
-        print(results)
+
+        # 获取参考摘要和生成的摘要
+        references = dataset["highlights"][:5]  # 选择前5个参考摘要
+        articles = dataset["article"][:5]  # 选择前5个文章
+
+        # 使用模型生成摘要
+        predictions = summarizer(articles, max_length=150, min_length=50, do_sample=False)
+
+        # 计算ROUGE得分
+        results = rouge.compute(predictions=[summary["summary_text"] for summary in predictions], references=references)
+
+        print("ROUGE Scores:", results)
 
 
 if __name__ == "__main__":
     test = AiSummary()
     test.summary()
+    test.evaluate()
