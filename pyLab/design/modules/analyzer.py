@@ -1,5 +1,7 @@
 import jieba
 from collections import Counter
+import nltk
+from nltk.stem import WordNetLemmatizer
 
 
 class Analyzer:
@@ -30,10 +32,12 @@ class Analyzer:
     stop_words = stop_words_en + stop_words_cn
 
     def __init__(self, stopwords=None):
-        """
-        初始化分析器，支持传入自定义的停用词列表。
-        """
+
+        # 初始化分析器，支持传入自定义的停用词列表。
         self.stopwords = stopwords if stopwords else set()
+
+        # 初始化spaCy和NLTK
+        self.lemmatizer = WordNetLemmatizer()
 
     def preprocess_text(self, text):
         """
@@ -41,7 +45,11 @@ class Analyzer:
         """
         text = text.lower()
         words = jieba.lcut(text)
-        words = [word for word in words if word not in self.stop_words and len(word.strip()) > 1]
+        words = [
+            self.lemmatizer.lemmatize(word)  # 词形还原
+            for word in words
+            if word not in self.stop_words and len(word.strip()) > 1
+        ]
 
         """
         将结果写入txt文件
